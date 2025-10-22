@@ -8,7 +8,7 @@
 </head>
 <body>
 
-  <!-- App Shell: Header -->
+  <!-- Header -->
   <header>
     <div class="brand">
       <div class="logo">BR</div>
@@ -29,10 +29,10 @@
     </nav>
   </header>
 
-  <!-- App Shell: Content area with sidebars -->
+  <!-- App layout -->
   <div class="app-layout">
-    <!-- Left sidebar: context-aware -->
-    <aside class="sidebar left" id="left-sidebar">
+    <!-- Left sidebar -->
+    <aside class="sidebar left">
       <div class="sidebar-section">
         <h4>Quick filters</h4>
         <div class="filter-group">
@@ -81,26 +81,62 @@
 
     <!-- Main content -->
     <main id="content">
-
-      <!-- Marketplace: trading-first home -->
+      <!-- Marketplace -->
       <section id="marketplace" class="panel">
         <div class="panel-header">
           <h2>Marketplace</h2>
           <div class="price-rail">
-            <div class="price-item">
-              <span>BTC index</span><strong>R 1,065,000</strong>
-            </div>
-            <div class="price-item">
-              <span>ETH index</span><strong>R 19,800</strong>
-            </div>
-            <div class="price-item">
-              <span>USDT index</span><strong>R 18.95</strong>
-            </div>
+            <div class="price-item"><span>BTC index</span><strong>R 1,065,000</strong></div>
+            <div class="price-item"><span>ETH index</span><strong>R 19,800</strong></div>
+            <div class="price-item"><span>USDT index</span><strong>R 18.95</strong></div>
           </div>
         </div>
 
+        <!-- Chart panel -->
+        <section class="panel chart-panel">
+          <div class="panel-header">
+            <h3>Market chart</h3>
+            <div class="chart-controls">
+              <label>Asset
+                <select id="chart-asset">
+                  <option>BTC</option>
+                  <option>ETH</option>
+                  <option>USDT</option>
+                </select>
+              </label>
+              <label>Type
+                <select id="chart-type">
+                  <option value="candlestick">Candlestick</option>
+                  <option value="line">Line</option>
+                </select>
+              </label>
+              <label>Timeframe
+                <select id="chart-timeframe">
+                  <option value="1m">1m</option>
+                  <option value="5m">5m</option>
+                  <option value="15m" selected>15m</option>
+                  <option value="1h">1h</option>
+                  <option value="4h">4h</option>
+                  <option value="1d">1d</option>
+                </select>
+              </label>
+              <div class="draw-tools">
+                <button class="btn ghost" data-tool="line">Draw line</button>
+                <button class="btn ghost" data-tool="hline">Horizontal line</button>
+                <button class="btn ghost" data-tool="text">Add text</button>
+                <button class="btn ghost" id="clear-draw">Clear</button>
+              </div>
+            </div>
+          </div>
+          <div class="chart-container">
+            <canvas id="marketChart" width="900" height="340"></canvas>
+            <canvas id="marketOverlay" width="900" height="340"></canvas>
+          </div>
+          <p class="muted">Blue candles indicate bullish periods; red indicate bearish. Line chart connects closing prices.</p>
+        </section>
+
+        <!-- Vendor cards and quick listing creation -->
         <div class="grid-3">
-          <!-- Vendor card examples -->
           <article class="card vendor">
             <div class="vendor-top">
               <div>
@@ -122,7 +158,7 @@
               </ul>
             </div>
             <div class="vendor-actions">
-              <a class="btn ghost open-trade" href="#trade" data-listing="A-USDT">Trade</a>
+              <a class="btn ghost open-trade" href="#trade" data-listing="Vendor_A-USDT">Trade</a>
               <button class="btn" data-expand="A-USDT">View terms</button>
             </div>
             <div class="vendor-expand" id="expand-A-USDT">
@@ -152,7 +188,7 @@
               </ul>
             </div>
             <div class="vendor-actions">
-              <a class="btn ghost open-trade" href="#trade" data-listing="B-BTC">Trade</a>
+              <a class="btn ghost open-trade" href="#trade" data-listing="Vendor_B-BTC">Trade</a>
               <button class="btn" data-expand="B-BTC">View terms</button>
             </div>
             <div class="vendor-expand" id="expand-B-BTC">
@@ -161,7 +197,6 @@
             </div>
           </article>
 
-          <!-- Create listing quick entry -->
           <article class="card">
             <h3>Create a listing</h3>
             <form id="form-listing">
@@ -213,15 +248,50 @@
         </div>
       </section>
 
-      <!-- Trade room: three-column trading flow -->
+      <!-- Trade room -->
       <section id="trade" class="panel">
         <div class="panel-header">
           <h2>Trade room</h2>
           <p class="muted">Escrow-protected trade. Follow steps and timelines for safe release.</p>
         </div>
 
+        <!-- Chart in trade room -->
+        <section class="panel chart-panel">
+          <div class="panel-header">
+            <h3>Asset chart</h3>
+            <div class="chart-controls">
+              <label>Type
+                <select id="trade-chart-type">
+                  <option value="candlestick">Candlestick</option>
+                  <option value="line">Line</option>
+                </select>
+              </label>
+              <label>Timeframe
+                <select id="trade-chart-timeframe">
+                  <option value="1m">1m</option>
+                  <option value="5m">5m</option>
+                  <option value="15m" selected>15m</option>
+                  <option value="1h">1h</option>
+                  <option value="4h">4h</option>
+                  <option value="1d">1d</option>
+                </select>
+              </label>
+              <div class="draw-tools">
+                <button class="btn ghost" data-tool-trade="line">Draw line</button>
+                <button class="btn ghost" data-tool-trade="hline">Horizontal line</button>
+                <button class="btn ghost" data-tool-trade="text">Add text</button>
+                <button class="btn ghost" id="clear-trade-draw">Clear</button>
+              </div>
+            </div>
+          </div>
+          <div class="chart-container">
+            <canvas id="tradeChart" width="900" height="260"></canvas>
+            <canvas id="tradeOverlay" width="900" height="260"></canvas>
+          </div>
+        </section>
+
         <div class="trade-grid">
-          <!-- Left: timeline + controls -->
+          <!-- Left -->
           <div class="trade-left">
             <div class="card">
               <h3>Escrow timeline</h3>
@@ -237,7 +307,6 @@
                 <button class="btn ghost" id="raise-dispute">Raise dispute</button>
               </div>
             </div>
-
             <div class="card">
               <h3>Open trade</h3>
               <form id="form-open-trade">
@@ -263,7 +332,7 @@
             </div>
           </div>
 
-          <!-- Center: payment and actions -->
+          <!-- Center -->
           <div class="trade-center">
             <div class="card">
               <h3>Payment</h3>
@@ -282,7 +351,6 @@
                 </fieldset>
               </form>
             </div>
-
             <div class="card">
               <h3>Release</h3>
               <form id="form-release" class="disabled">
@@ -299,7 +367,7 @@
             </div>
           </div>
 
-          <!-- Right: counterparty panel -->
+          <!-- Right -->
           <div class="trade-right">
             <div class="card">
               <h3>Counterparty</h3>
@@ -311,7 +379,6 @@
               </ul>
               <p class="muted">Policy: name-match required, payment window 30 min, proof mandatory.</p>
             </div>
-
             <div class="card">
               <h3>Chat / Support</h3>
               <div class="chat-box">
@@ -328,13 +395,12 @@
         </div>
       </section>
 
-      <!-- Listings studio page -->
+      <!-- Listings -->
       <section id="listings" class="panel">
         <div class="panel-header">
           <h2>Listings</h2>
           <p class="muted">Create and manage your buy/sell listings with precise pricing and limits.</p>
         </div>
-
         <div class="grid-2">
           <article class="card">
             <h3>New listing</h3>
@@ -368,18 +434,12 @@
               </fieldset>
             </form>
           </article>
-
           <article class="card">
             <h3>My listings</h3>
             <table class="table">
               <thead>
                 <tr>
-                  <th>ID</th>
-                  <th>Side</th>
-                  <th>Asset</th>
-                  <th>Price mode</th>
-                  <th>Limits</th>
-                  <th>Status</th>
+                  <th>ID</th><th>Side</th><th>Asset</th><th>Price mode</th><th>Limits</th><th>Status</th>
                 </tr>
               </thead>
               <tbody id="my-listings">
@@ -400,20 +460,15 @@
           <article class="card">
             <h3>Crypto balances</h3>
             <table class="table">
-              <thead>
-                <tr><th>Asset</th><th>Balance</th><th>Address</th><th>Actions</th></tr>
-              </thead>
+              <thead><tr><th>Asset</th><th>Balance</th><th>Address</th><th>Actions</th></tr></thead>
               <tbody id="wallet-tbody">
                 <tr><td>BTC</td><td class="balance" data-asset="BTC">0.00000000</td><td class="address">—</td><td><button class="btn ghost provision" data-asset="BTC">Provision</button></td></tr>
                 <tr><td>ETH</td><td class="balance" data-asset="ETH">0.00000000</td><td class="address">—</td><td><button class="btn ghost provision" data-asset="ETH">Provision</button></td></tr>
                 <tr><td>USDT</td><td class="balance" data-asset="USDT">0.00</td><td class="address">—</td><td><button class="btn ghost provision" data-asset="USDT">Provision</button></td></tr>
               </tbody>
             </table>
-            <div class="inline-actions">
-              <button id="simulate-deposit" class="btn subtle">✨ Simulate deposit 0.05 BTC</button>
-            </div>
+            <div class="inline-actions"><button id="simulate-deposit" class="btn subtle">✨ Simulate deposit 0.05 BTC</button></div>
           </article>
-
           <article class="card">
             <h3>Withdraw crypto</h3>
             <form id="form-withdraw">
@@ -464,7 +519,6 @@
               </fieldset>
             </form>
           </article>
-
           <article class="card">
             <h3>Fiat deposit / withdrawal</h3>
             <form id="form-fiat">
@@ -515,16 +569,11 @@
               </fieldset>
             </form>
           </article>
-
           <article class="card">
             <h3>Dispute status</h3>
             <table class="table">
-              <thead>
-                <tr><th>Dispute ID</th><th>Trade ID</th><th>Status</th><th>Opened</th><th>Latest update</th></tr>
-              </thead>
-              <tbody id="dispute-tbody">
-                <tr><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-              </tbody>
+              <thead><tr><th>Dispute ID</th><th>Trade ID</th><th>Status</th><th>Opened</th><th>Latest update</th></tr></thead>
+              <tbody id="dispute-tbody"><tr><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr></tbody>
             </table>
           </article>
         </div>
@@ -561,22 +610,17 @@
               </fieldset>
             </form>
           </article>
-
           <article class="card">
             <h3>Ticket history</h3>
             <table class="table">
-              <thead>
-                <tr><th>Ticket ID</th><th>Subject</th><th>Status</th><th>Last update</th></tr>
-              </thead>
-              <tbody id="ticket-tbody">
-                <tr><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-              </tbody>
+              <thead><tr><th>Ticket ID</th><th>Subject</th><th>Status</th><th>Last update</th></tr></thead>
+              <tbody id="ticket-tbody"><tr><td>—</td><td>—</td><td>—</td><td>—</td></tr></tbody>
             </table>
           </article>
         </div>
       </section>
 
-      <!-- Profile (KYC + Security + Preferences) -->
+      <!-- Profile -->
       <section id="profile" class="panel">
         <div class="panel-header">
           <h2>Profile</h2>
@@ -619,7 +663,6 @@
               </fieldset>
             </form>
           </article>
-
           <article class="card">
             <h3>Security</h3>
             <form id="form-security">
@@ -632,7 +675,6 @@
               </fieldset>
             </form>
           </article>
-
           <article class="card">
             <h3>Notifications</h3>
             <form id="form-notifications">
@@ -647,7 +689,7 @@
         </div>
       </section>
 
-      <!-- Auth: dedicated screen -->
+      <!-- Auth -->
       <section id="auth" class="panel">
         <div class="panel-header">
           <h2>Authentication</h2>
@@ -683,7 +725,6 @@
               </fieldset>
             </form>
           </article>
-
           <article class="card auth-form" id="signin-form" style="display:none;">
             <h3>Sign in</h3>
             <form id="form-signin">
@@ -759,7 +800,6 @@
               </fieldset>
             </form>
           </article>
-
           <article class="card">
             <h3>Appearance</h3>
             <form id="form-appearance">
@@ -774,7 +814,6 @@
               </fieldset>
             </form>
           </article>
-
           <article class="card">
             <h3>Session</h3>
             <div class="inline-actions">
@@ -785,8 +824,8 @@
       </section>
     </main>
 
-    <!-- Right sidebar: smart panel -->
-    <aside class="sidebar right" id="right-sidebar">
+    <!-- Right sidebar -->
+    <aside class="sidebar right">
       <div class="sidebar-section">
         <h4>Context</h4>
         <p class="muted">Counterparty policies, timers, and reputation summary appear here during trades.</p>
