@@ -1,5 +1,6 @@
-// ===== Smooth scroll navigation + active highlight =====
-const navLinks = document.querySelectorAll("nav a");
+// Smooth scroll navigation + active highlight
+const navLinks = document.querySelectorAll("header .top-nav a");
+const sections = Array.from(navLinks).map(l => document.querySelector(l.getAttribute("href")));
 navLinks.forEach(link => {
   link.addEventListener("click", e => {
     e.preventDefault();
@@ -7,18 +8,16 @@ navLinks.forEach(link => {
     target?.scrollIntoView({ behavior: "smooth", block: "start" });
   });
 });
-const sectionMap = Array.from(navLinks).map(l => document.querySelector(l.getAttribute("href")));
 window.addEventListener("scroll", () => {
-  const fromTop = window.scrollY + 120;
+  const y = window.scrollY + 120;
   navLinks.forEach((link, i) => {
-    const s = sectionMap[i];
-    if (!s) return;
-    const inView = s.offsetTop <= fromTop && s.offsetTop + s.offsetHeight > fromTop;
+    const s = sections[i]; if (!s) return;
+    const inView = s.offsetTop <= y && s.offsetTop + s.offsetHeight > y;
     link.style.color = inView ? "var(--accent1)" : "var(--muted)";
   });
 });
 
-// ===== Toast utility =====
+// Toast utility
 function toast(msg, type = "info") {
   const t = document.createElement("div");
   t.textContent = msg;
@@ -32,10 +31,10 @@ function toast(msg, type = "info") {
   else if (type === "warn") { t.style.background = "rgba(245,158,11,0.18)"; t.style.color = "#fde68a"; }
   else { t.style.background = "rgba(255,255,255,0.10)"; t.style.color = "var(--text)"; }
   document.body.appendChild(t);
-  setTimeout(() => t.remove(), 2000);
+  setTimeout(() => t.remove(), 2200);
 }
 
-// ===== Global prototype form handler =====
+// Global prototype form handler
 document.querySelectorAll("form").forEach(form => {
   form.addEventListener("submit", e => {
     e.preventDefault();
@@ -43,21 +42,94 @@ document.querySelectorAll("form").forEach(form => {
   });
 });
 
-// ===== Auth toggle logic =====
-const signupForm = document.getElementById("signup-form");
-const signinForm = document.getElementById("signin-form");
-document.getElementById("show-signup")?.addEventListener("click", () => {
-  signupForm.style.display = "block";
-  signinForm.style.display = "none";
-  toast("Sign up selected.", "info");
-});
-document.getElementById("show-signin")?.addEventListener("click", () => {
-  signupForm.style.display = "none";
-  signinForm.style.display = "block";
-  toast("Sign in selected.", "info");
+// Sidebar vendor terms toggles
+document.querySelectorAll("[data-expand]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const id = btn.getAttribute("data-expand");
+    const el = document.getElementById(`expand-${id}`);
+    if (!el) return;
+    const open = el.style.display === "block";
+    el.style.display = open ? "none" : "block";
+  });
 });
 
-// ===== Wallet: provision address + simulate deposit with animation =====
+// Marketplace -> Trade room listing ID passthrough
+document.querySelectorAll(".open-trade").forEach(a => {
+  a.addEventListener("click", () => {
+    const id = a.dataset.listing || "LISTING";
+    setTimeout(() => {
+      document.getElementById("listing-id").value = id;
+      document.getElementById("cp-name").textContent = id.split("-")[0].replace("_", " ");
+      toast(`Trade opening for ${id}`, "info");
+    }, 300);
+  });
+});
+
+// Escrow flow
+const formOpen = document.getElementById("form-open-trade");
+const formPaid = document.getElementById("form-mark-paid");
+const formRelease = document.getElementById("form-release");
+const steps = document.querySelectorAll(".timeline .step");
+
+function setStepActive(n) {
+  steps.forEach((s, i) => s.classList.toggle("active", i < n));
+}
+
+formOpen?.addEventListener("submit", e => {
+  e.preventDefault();
+  formPaid.classList.remove("disabled");
+  setStepActive(1);
+  startPaymentCountdown(30 * 60);
+  toast("Escrow locked. Awaiting payment.", "success");
+});
+
+formPaid?.addEventListener("submit", e => {
+  e.preventDefault();
+  formRelease.classList.remove("disabled");
+  setStepActive(2);
+  toast("Payment marked. Ready to release.", "success");
+});
+
+formRelease?.addEventListener("submit", e => {
+  e.preventDefault();
+  const ok = document.getElementById("release-confirm").checked && document.getElementById("release-2fa").value.trim();
+  if (!ok) { toast("Confirm checkbox and 2FA required.", "warn"); return; }
+  setStepActive(3);
+  toast("Funds released. Trade complete.", "success");
+});
+
+// Payment countdown
+let countdownTimer;
+function startPaymentCountdown(seconds) {
+  clearInterval(countdownTimer);
+  const label = document.getElementById("payment-window");
+  let remain = seconds;
+  countdownTimer = setInterval(() => {
+    const m = Math.floor(remain / 60);
+    const s = remain % 60;
+    label.textContent = `${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+    if (remain-- <= 0) {
+      clearInterval(countdownTimer);
+      toast("Payment window expired.", "warn");
+    }
+  }, 1000);
+}
+
+// Chat prototype
+document.getElementById("chat-send")?.addEventListener("click", () => {
+  const input = document.getElementById("chat-input");
+  const log = document.getElementById("chat-log");
+  const text = input.value.trim();
+  if (!text) return;
+  const msg = document.createElement("div");
+  msg.className = "chat-msg";
+  msg.textContent = `You: ${text}`;
+  log.appendChild(msg);
+  input.value = "";
+  log.scrollTop = log.scrollHeight;
+});
+
+// Wallet: provision + simulate deposit
 const walletBody = document.getElementById("wallet-tbody");
 walletBody?.addEventListener("click", e => {
   const btn = e.target.closest(".provision");
@@ -72,11 +144,11 @@ document.getElementById("simulate-deposit")?.addEventListener("click", () => {
   const btcCell = document.querySelector('.balance[data-asset="BTC"]');
   if (!btcCell) return;
   animateNumber(btcCell, 0.05, 8);
-  stepActivate(1);
+  setStepActive(1);
   toast("0.05 BTC deposited (simulation).", "success");
 });
 
-// ===== Number animation utility =====
+// Number animation utility
 function animateNumber(el, target, decimals = 2, duration = 1200) {
   const start = parseFloat(el.textContent) || 0;
   const startTime = performance.now();
@@ -90,47 +162,28 @@ function animateNumber(el, target, decimals = 2, duration = 1200) {
   requestAnimationFrame(frame);
 }
 
-// ===== Marketplace: pass listing ID into escrow form =====
-document.querySelectorAll(".open-trade").forEach(a => {
-  a.addEventListener("click", () => {
-    const id = a.dataset.listing || "LISTING";
-    setTimeout(() => {
-      document.getElementById("listing-id").value = id;
-      toast(`Trade opening for ${id}`, "info");
-    }, 300);
-  });
+// Sidebar quick filters "Apply" (prototype)
+document.getElementById("apply-sb-filters")?.addEventListener("click", () => {
+  const a = document.getElementById("sb-asset").value;
+  const s = document.getElementById("sb-side").value;
+  const p = document.getElementById("sb-pay").value;
+  const c = document.getElementById("sb-country").value;
+  toast(`Filters applied: ${a} • ${s} • ${p} • ${c}`, "info");
+});
+document.getElementById("save-sb-filters")?.addEventListener("click", () => {
+  toast("Filter saved (prototype).", "success");
 });
 
-// ===== Escrow flow: lock -> mark paid -> release with timeline =====
-const formOpen = document.getElementById("form-open-trade");
-const formPaid = document.getElementById("form-mark-paid");
-const formRelease = document.getElementById("form-release");
-
-formOpen?.addEventListener("submit", e => {
-  e.preventDefault();
-  formPaid.classList.remove("disabled");
-  stepActivate(1);
-  toast("Escrow locked. Awaiting payment.", "success");
+// Auth toggle logic
+const signupForm = document.getElementById("signup-form");
+const signinForm = document.getElementById("signin-form");
+document.getElementById("show-signup")?.addEventListener("click", () => {
+  signupForm.style.display = "block";
+  signinForm.style.display = "none";
+  toast("Sign up selected.", "info");
 });
-
-formPaid?.addEventListener("submit", e => {
-  e.preventDefault();
-  formRelease.classList.remove("disabled");
-  stepActivate(2);
-  toast("Payment marked. Ready to release.", "success");
+document.getElementById("show-signin")?.addEventListener("click", () => {
+  signupForm.style.display = "none";
+  signinForm.style.display = "block";
+  toast("Sign in selected.", "info");
 });
-
-formRelease?.addEventListener("submit", e => {
-  e.preventDefault();
-  const ok = document.getElementById("release-confirm").checked && document.getElementById("release-2fa").value.trim();
-  if (!ok) { toast("Confirm checkbox and 2FA required.", "warn"); return; }
-  stepActivate(3);
-  toast("Funds released. Trade complete.", "success");
-});
-
-// ===== Timeline step activation =====
-function stepActivate(n) {
-  document.querySelectorAll(".timeline .step").forEach((s, i) => {
-    s.classList.toggle("active", i < n);
-  });
-}

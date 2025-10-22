@@ -4,736 +4,803 @@
   <meta charset="utf-8" />
   <title>Borrowers Prototype</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- Header -->
+  <!-- App Shell: Header -->
   <header>
     <div class="brand">
       <div class="logo">BR</div>
       <h1>Borrowers</h1>
     </div>
-    <nav>
-      <a href="#home">Home</a>
-      <a href="#auth">Auth</a>
-      <a href="#kyc">KYC</a>
-      <a href="#wallets">Wallets</a>
+    <nav class="top-nav">
       <a href="#marketplace">Marketplace</a>
-      <a href="#escrow">Escrow</a>
+      <a href="#trade">Trade room</a>
+      <a href="#listings">Listings</a>
+      <a href="#wallets">Wallets</a>
+      <a href="#fiat">Fiat</a>
       <a href="#disputes">Disputes</a>
-      <a href="#payments">Fiat</a>
-      <a href="#compliance">Compliance</a>
       <a href="#support">Support</a>
+      <a href="#profile">Profile</a>
+      <a href="#auth" class="auth-link">Auth</a>
+      <a href="#compliance">Compliance</a>
       <a href="#settings">Settings</a>
     </nav>
   </header>
 
-  <!-- Home -->
-  <main id="home" class="panel">
-    <div class="hero">
-      <div class="hero-content">
-        <h2>Trade with taste. Custody with confidence.</h2>
-        <p>Escrow-protected P2P trades, multi-asset wallets, and compliance built in — wrapped in a cinematic UI.</p>
-        <div class="hero-actions">
-          <a class="btn primary" href="#auth">Get started</a>
-          <a class="btn ghost" href="#marketplace">Browse market</a>
-        </div>
-      </div>
-      <div class="hero-meter">
-        <div class="meter">
-          <span>Trust score</span>
-          <div class="bar"><div class="fill" style="width:82%"></div></div>
-        </div>
-        <div class="meter">
-          <span>Uptime</span>
-          <div class="bar"><div class="fill" style="width:99.98%"></div></div>
-        </div>
-        <div class="meter">
-          <span>Dispute resolution</span>
-          <div class="bar"><div class="fill" style="width:94%"></div></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="status-grid">
-      <div class="card">
-        <h3>Status</h3>
-        <ul class="status">
-          <li><strong>User:</strong> Not signed in</li>
-          <li><strong>KYC:</strong> Not started</li>
-          <li><strong>Wallets:</strong> No addresses</li>
-          <li><strong>Listings:</strong> 0 active</li>
-          <li><strong>Open trades:</strong> 0</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>Primary actions</h3>
-        <ul class="actions">
-          <li><strong>Start:</strong> <a href="#auth">Create account</a></li>
-          <li><strong>Verify:</strong> <a href="#kyc">Complete KYC</a></li>
-          <li><strong>Fund:</strong> <a href="#wallets">View wallets</a></li>
-          <li><strong>Trade:</strong> <a href="#marketplace">Browse listings</a></li>
-        </ul>
-      </div>
-    </div>
-  </main>
-
-  <!-- Auth -->
-  <section id="auth" class="panel">
-    <h2>Authentication</h2>
-    <div class="auth-toggle">
-      <button class="btn ghost" id="show-signup">Sign up</button>
-      <button class="btn ghost" id="show-signin">Sign in</button>
-    </div>
-    <div class="grid-2">
-      <article class="card auth-form" id="signup-form">
-        <h3>Sign up</h3>
-        <form id="form-signup">
-          <fieldset>
-            <legend>Create your account</legend>
-            <label><strong>Email</strong>
-              <input type="email" name="email" required />
-            </label>
-            <label><strong>Password</strong>
-              <input type="password" name="password" required />
-            </label>
-            <label><strong>Country</strong>
-              <select name="country" required>
-                <option value="">Select country</option>
-                <option>South Africa</option>
-                <option>Nigeria</option>
-                <option>Kenya</option>
-                <option>United Kingdom</option>
-                <option>United States</option>
-              </select>
-            </label>
-            <label class="inline">
-              <input type="checkbox" required /> I agree to the terms
-            </label>
-            <button type="submit" class="btn primary">Create account</button>
-          </fieldset>
-        </form>
-      </article>
-
-      <article class="card auth-form" id="signin-form" style="display:none;">
-        <h3>Sign in</h3>
-        <form id="form-signin">
-          <fieldset>
-            <legend>Access your account</legend>
-            <label><strong>Email</strong>
-              <input type="email" name="email" required />
-            </label>
-            <label><strong>Password</strong>
-              <input type="password" name="password" required />
-            </label>
-            <label><strong>2FA code (optional)</strong>
-              <input type="text" name="totp" />
-            </label>
-            <button type="submit" class="btn primary">Sign in</button>
-          </fieldset>
-        </form>
-      </article>
-    </div>
-  </section>
-
-  <!-- KYC -->
-  <section id="kyc" class="panel">
-    <h2>KYC verification</h2>
-    <div class="grid-2">
-      <article class="card">
-        <h3>Tier selection</h3>
-        <form id="form-kyc-tier">
-          <fieldset>
-            <legend>Select KYC tier</legend>
-            <label><strong>Tier</strong>
-              <select required>
-                <option value="">Choose tier</option>
-                <option>Tier 1 — Basic (email + phone)</option>
-                <option>Tier 2 — Standard (ID + selfie)</option>
-                <option>Tier 3 — Enhanced (POA + source of funds)</option>
-              </select>
-            </label>
-            <button type="submit" class="btn primary">Continue</button>
-          </fieldset>
-        </form>
-      </article>
-
-      <article class="card">
-        <h3>ID submission</h3>
-        <form id="form-kyc-id">
-          <fieldset>
-            <legend>Provide identity details</legend>
-            <label><strong>Full name</strong>
-              <input type="text" required />
-            </label>
-            <label><strong>Date of birth</strong>
-              <input type="date" required />
-            </label>
-            <label><strong>ID type</strong>
-              <select required>
-                <option value="">Select</option>
-                <option>Passport</option>
-                <option>National ID</option>
-                <option>Driver’s license</option>
-              </select>
-            </label>
-            <label><strong>ID number</strong>
-              <input type="text" required />
-            </label>
-            <label><strong>Address</strong>
-              <input type="text" required />
-            </label>
-            <button type="submit" class="btn primary">Submit KYC</button>
-          </fieldset>
-        </form>
-      </article>
-    </div>
-  </section>
-
-  <!-- Wallets -->
-  <section id="wallets" class="panel">
-    <h2>Wallets</h2>
-    <div class="grid-2">
-      <article class="card">
-        <h3>Crypto balances</h3>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Asset</th>
-              <th>Balance</th>
-              <th>Address</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody id="wallet-tbody">
-            <tr>
-              <td>BTC</td>
-              <td class="balance" data-asset="BTC">0.00000000</td>
-              <td class="address">—</td>
-              <td><button class="btn ghost provision" data-asset="BTC">Provision</button></td>
-            </tr>
-            <tr>
-              <td>ETH</td>
-              <td class="balance" data-asset="ETH">0.00000000</td>
-              <td class="address">—</td>
-              <td><button class="btn ghost provision" data-asset="ETH">Provision</button></td>
-            </tr>
-            <tr>
-              <td>USDT</td>
-              <td class="balance" data-asset="USDT">0.00</td>
-              <td class="address">—</td>
-              <td><button class="btn ghost provision" data-asset="USDT">Provision</button></td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="inline-actions">
-          <button id="simulate-deposit" class="btn subtle">✨ Simulate deposit 0.05 BTC</button>
-        </div>
-      </article>
-
-      <article class="card">
-        <h3>Withdraw crypto</h3>
-        <form id="form-withdraw">
-          <fieldset>
-            <legend>Send assets</legend>
-            <label><strong>Asset</strong>
-              <select required>
-                <option value="">Select</option>
-                <option>BTC</option>
-                <option>ETH</option>
-                <option>USDT (ERC20)</option>
-              </select>
-            </label>
-            <label><strong>Amount</strong>
-              <input type="number" step="0.00000001" required />
-            </label>
-            <label><strong>Destination address</strong>
-              <input type="text" required />
-            </label>
-            <label><strong>2FA code</strong>
-              <input type="text" required />
-            </label>
-            <button type="submit" class="btn primary">Withdraw</button>
-          </fieldset>
-        </form>
-      </article>
-    </div>
-  </section>
-
-  <!-- Marketplace -->
-  <section id="marketplace" class="panel">
-    <h2>P2P marketplace</h2>
-    <article class="card">
-      <h3>Browse listings</h3>
-      <form id="form-filters">
-        <fieldset class="grid-4">
-          <div>
-            <label><strong>Asset</strong>
-              <select>
-                <option>BTC</option>
-                <option>ETH</option>
-                <option>USDT</option>
-              </select>
-            </label>
-          </div>
-          <div>
-            <label><strong>Side</strong>
-              <select>
-                <option>Buy</option>
-                <option>Sell</option>
-              </select>
-            </label>
-          </div>
-          <div>
-            <label><strong>Payment method</strong>
-              <select>
-                <option>Bank transfer</option>
-                <option>Mobile money</option>
-                <option>Cash</option>
-              </select>
-            </label>
-          </div>
-          <div>
-            <label><strong>Country</strong>
-              <select>
-                <option>South Africa</option>
-                <option>Nigeria</option>
-                <option>Kenya</option>
-              </select>
-            </label>
-          </div>
-          <button type="submit" class="btn primary">Apply filters</button>
-        </fieldset>
-      </form>
-
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Seller</th>
-            <th>Asset</th>
-            <th>Price</th>
-            <th>Limits</th>
-            <th>Payment</th>
-            <th>Rating</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody id="listing-tbody">
-          <tr>
-            <td>Vendor_A</td>
-            <td>USDT</td>
-            <td>R 19.50</td>
-            <td>R 500 – R 20,000</td>
-            <td>Bank transfer</td>
-            <td>4.9</td>
-            <td><a class="btn ghost open-trade" href="#escrow" data-listing="A-USDT">Open trade</a></td>
-          </tr>
-          <tr>
-            <td>Vendor_B</td>
-            <td>BTC</td>
-            <td>R 1,070,000</td>
-            <td>R 2,000 – R 50,000</td>
-            <td>Mobile money</td>
-            <td>4.7</td>
-            <td><a class="btn ghost open-trade" href="#escrow" data-listing="B-BTC">Open trade</a></td>
-          </tr>
-        </tbody>
-      </table>
-    </article>
-
-    <article class="card">
-      <h3>Create listing</h3>
-      <form id="form-listing">
-        <fieldset class="grid-2">
-          <label><strong>Side</strong>
-            <select required>
-              <option value="">Select</option>
-              <option>Sell</option>
-              <option>Buy</option>
-            </select>
-          </label>
-          <label><strong>Asset</strong>
-            <select required>
-              <option value="">Select</option>
+  <!-- App Shell: Content area with sidebars -->
+  <div class="app-layout">
+    <!-- Left sidebar: context-aware -->
+    <aside class="sidebar left" id="left-sidebar">
+      <div class="sidebar-section">
+        <h4>Quick filters</h4>
+        <div class="filter-group">
+          <label>Asset
+            <select id="sb-asset">
               <option>BTC</option>
               <option>ETH</option>
               <option>USDT</option>
             </select>
           </label>
-          <label><strong>Price mode</strong>
-            <select required>
-              <option>Fixed</option>
-              <option>Index + premium</option>
+          <label>Side
+            <select id="sb-side">
+              <option>Buy</option>
+              <option>Sell</option>
             </select>
           </label>
-          <label><strong>Price / premium %</strong>
-            <input type="number" step="0.01" required />
-          </label>
-          <label><strong>Min limit</strong>
-            <input type="number" step="0.01" required />
-          </label>
-          <label><strong>Max limit</strong>
-            <input type="number" step="0.01" required />
-          </label>
-          <label><strong>Payment method</strong>
-            <select required>
+          <label>Payment
+            <select id="sb-pay">
               <option>Bank transfer</option>
               <option>Mobile money</option>
               <option>Cash</option>
             </select>
           </label>
-          <label><strong>Terms</strong>
-            <textarea rows="4" placeholder="Payment window, proof requirements, etc."></textarea>
+          <label>Country
+            <select id="sb-country">
+              <option>South Africa</option>
+              <option>Nigeria</option>
+              <option>Kenya</option>
+            </select>
           </label>
-          <button type="submit" class="btn primary">Publish listing</button>
-        </fieldset>
-      </form>
-    </article>
-  </section>
+        </div>
+        <div class="sidebar-actions">
+          <button class="btn ghost" id="apply-sb-filters">Apply</button>
+          <button class="btn ghost" id="save-sb-filters">Save filter</button>
+        </div>
+      </div>
 
-  <!-- Escrow -->
-  <section id="escrow" class="panel">
-    <h2>Escrow & trade flow</h2>
-    <div class="grid-3">
-      <article class="card">
-        <h3>Open trade</h3>
-        <form id="form-open-trade">
-          <fieldset>
-            <legend>Initiate escrow</legend>
-            <label><strong>Listing ID</strong>
-              <input type="text" id="listing-id" required />
-            </label>
-            <label><strong>Asset</strong>
-              <input type="text" id="escrow-asset" value="USDT" />
-            </label>
-            <label><strong>Amount</strong>
-              <input type="number" id="escrow-amount" step="0.01" required />
-            </label>
-            <label><strong>Payment method</strong>
-              <input type="text" id="escrow-payment" value="Bank transfer" />
-            </label>
-            <label><strong>Counterparty notes</strong>
-              <textarea rows="3" id="escrow-notes" placeholder="Clarifications before locking"></textarea>
-            </label>
-            <button type="submit" class="btn primary">Lock escrow</button>
-          </fieldset>
-        </form>
-      </article>
+      <div class="sidebar-section">
+        <h4>Watchlist</h4>
+        <ul class="list">
+          <li>BTC • Bank transfer • ZA</li>
+          <li>USDT • Mobile money • NG</li>
+        </ul>
+      </div>
+    </aside>
 
-      <article class="card">
-        <h3>Confirm payment</h3>
-        <form id="form-mark-paid" class="disabled">
-          <fieldset>
-            <legend>Submit payment proof</legend>
-            <label><strong>Transaction reference</strong>
-              <input type="text" id="payment-ref" required />
-            </label>
-            <label><strong>Amount paid</strong>
-              <input type="number" id="payment-amount" step="0.01" required />
-            </label>
-            <label><strong>Proof notes</strong>
-              <textarea rows="3" id="payment-notes" placeholder="Bank slip details, timestamps"></textarea>
-            </label>
-            <button type="submit" class="btn primary">Mark as paid</button>
-          </fieldset>
-        </form>
-      </article>
+    <!-- Main content -->
+    <main id="content">
 
-      <article class="card">
-        <h3>Release crypto</h3>
-        <form id="form-release" class="disabled">
-          <fieldset>
-            <legend>Finalize escrow</legend>
-            <label><strong>2FA code</strong>
-              <input type="text" id="release-2fa" required />
-            </label>
-            <label class="inline">
-              <input type="checkbox" id="release-confirm" required /> I confirm payment was received
-            </label>
-            <button type="submit" class="btn primary">Release funds</button>
-          </fieldset>
-        </form>
-      </article>
-    </div>
-    <div class="timeline">
-      <div class="step" data-step="1">Escrow locked</div>
-      <div class="step" data-step="2">Payment marked</div>
-      <div class="step" data-step="3">Funds released</div>
-    </div>
-  </section>
+      <!-- Marketplace: trading-first home -->
+      <section id="marketplace" class="panel">
+        <div class="panel-header">
+          <h2>Marketplace</h2>
+          <div class="price-rail">
+            <div class="price-item">
+              <span>BTC index</span><strong>R 1,065,000</strong>
+            </div>
+            <div class="price-item">
+              <span>ETH index</span><strong>R 19,800</strong>
+            </div>
+            <div class="price-item">
+              <span>USDT index</span><strong>R 18.95</strong>
+            </div>
+          </div>
+        </div>
 
-  <!-- Disputes -->
-  <section id="disputes" class="panel">
-    <h2>Disputes</h2>
-    <div class="grid-2">
-      <article class="card">
-        <h3>Open a dispute</h3>
-        <form id="form-dispute">
-          <fieldset>
-            <legend>Dispute details</legend>
-            <label><strong>Trade ID</strong>
-              <input type="text" required />
-            </label>
-            <label><strong>Reason</strong>
-              <select required>
-                <option value="">Select</option>
-                <option>No payment received</option>
-                <option>Payment reversed</option>
-                <option>Counterparty unresponsive</option>
-                <option>Other</option>
-              </select>
-            </label>
-            <label><strong>Description</strong>
-              <textarea rows="4" placeholder="Provide evidence and context" required></textarea>
-            </label>
-            <button type="submit" class="btn primary">Submit dispute</button>
-          </fieldset>
-        </form>
-      </article>
+        <div class="grid-3">
+          <!-- Vendor card examples -->
+          <article class="card vendor">
+            <div class="vendor-top">
+              <div>
+                <h3>Vendor_A</h3>
+                <p class="muted">Verified • 4.9 ★ • 1,240 trades</p>
+              </div>
+              <div class="badge good">Low dispute rate</div>
+            </div>
+            <div class="vendor-main">
+              <div class="vendor-price">
+                <span class="label">Price</span>
+                <strong>USDT • R 19.50</strong>
+                <span class="muted">+2.9% vs index</span>
+              </div>
+              <ul class="vendor-terms">
+                <li><strong>Limits:</strong> R 500 – R 20,000</li>
+                <li><strong>Payment:</strong> Bank transfer</li>
+                <li><strong>Avg release:</strong> 8 min</li>
+              </ul>
+            </div>
+            <div class="vendor-actions">
+              <a class="btn ghost open-trade" href="#trade" data-listing="A-USDT">Trade</a>
+              <button class="btn" data-expand="A-USDT">View terms</button>
+            </div>
+            <div class="vendor-expand" id="expand-A-USDT">
+              <p><strong>Terms:</strong> Name must match bank account. Payment window 30 min. Proof required.</p>
+              <p><strong>Recent completion:</strong> 97% last 50 trades.</p>
+            </div>
+          </article>
 
-      <article class="card">
-        <h3>Dispute status</h3>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Dispute ID</th>
-              <th>Trade ID</th>
-              <th>Status</th>
-              <th>Opened</th>
-              <th>Latest update</th>
-            </tr>
-          </thead>
-          <tbody id="dispute-tbody">
-            <tr>
-              <td>—</td>
-              <td>—</td>
-              <td>—</td>
-              <td>—</td>
-              <td>—</td>
-            </tr>
-          </tbody>
-        </table>
-      </article>
-    </div>
-  </section>
+          <article class="card vendor">
+            <div class="vendor-top">
+              <div>
+                <h3>Vendor_B</h3>
+                <p class="muted">Verified • 4.7 ★ • 980 trades</p>
+              </div>
+              <div class="badge neutral">High volume</div>
+            </div>
+            <div class="vendor-main">
+              <div class="vendor-price">
+                <span class="label">Price</span>
+                <strong>BTC • R 1,070,000</strong>
+                <span class="muted">+0.5% vs index</span>
+              </div>
+              <ul class="vendor-terms">
+                <li><strong>Limits:</strong> R 2,000 – R 50,000</li>
+                <li><strong>Payment:</strong> Mobile money</li>
+                <li><strong>Avg release:</strong> 12 min</li>
+              </ul>
+            </div>
+            <div class="vendor-actions">
+              <a class="btn ghost open-trade" href="#trade" data-listing="B-BTC">Trade</a>
+              <button class="btn" data-expand="B-BTC">View terms</button>
+            </div>
+            <div class="vendor-expand" id="expand-B-BTC">
+              <p><strong>Terms:</strong> Mobile money fees borne by buyer. Payment window 25 min.</p>
+              <p><strong>Recent completion:</strong> 93% last 50 trades.</p>
+            </div>
+          </article>
 
-  <!-- Fiat -->
-  <section id="payments" class="panel">
-    <h2>Fiat payments</h2>
-    <div class="grid-2">
-      <article class="card">
-        <h3>Add payment method</h3>
-        <form id="form-payment-method">
-          <fieldset>
-            <legend>Bank account or mobile money</legend>
-            <label><strong>Type</strong>
-              <select required>
-                <option value="">Select</option>
-                <option>Bank account</option>
-                <option>Mobile money</option>
-                <option>Cash pickup</option>
-              </select>
-            </label>
-            <label><strong>Provider / bank</strong>
-              <input type="text" required />
-            </label>
-            <label><strong>Account / number</strong>
-              <input type="text" required />
-            </label>
-            <label><strong>Account name</strong>
-              <input type="text" required />
-            </label>
-            <button type="submit" class="btn primary">Save method</button>
-          </fieldset>
-        </form>
-      </article>
+          <!-- Create listing quick entry -->
+          <article class="card">
+            <h3>Create a listing</h3>
+            <form id="form-listing">
+              <fieldset class="grid-2">
+                <label>Side
+                  <select required>
+                    <option value="">Select</option>
+                    <option>Sell</option>
+                    <option>Buy</option>
+                  </select>
+                </label>
+                <label>Asset
+                  <select required>
+                    <option value="">Select</option>
+                    <option>BTC</option>
+                    <option>ETH</option>
+                    <option>USDT</option>
+                  </select>
+                </label>
+                <label>Price mode
+                  <select required>
+                    <option>Fixed</option>
+                    <option>Index + premium</option>
+                  </select>
+                </label>
+                <label>Price / premium %
+                  <input type="number" step="0.01" required />
+                </label>
+                <label>Min limit
+                  <input type="number" step="0.01" required />
+                </label>
+                <label>Max limit
+                  <input type="number" step="0.01" required />
+                </label>
+                <label>Payment method
+                  <select required>
+                    <option>Bank transfer</option>
+                    <option>Mobile money</option>
+                    <option>Cash</option>
+                  </select>
+                </label>
+                <label>Terms
+                  <textarea rows="4" placeholder="Payment window, documents required, name-match policy, etc."></textarea>
+                </label>
+                <button type="submit" class="btn primary">Publish listing</button>
+              </fieldset>
+            </form>
+          </article>
+        </div>
+      </section>
 
-      <article class="card">
-        <h3>Fiat deposit / withdrawal</h3>
-        <form id="form-fiat">
-          <fieldset>
-            <legend>On/off ramp</legend>
-            <label><strong>Action</strong>
-              <select required>
-                <option value="">Select</option>
-                <option>Deposit fiat</option>
-                <option>Withdraw fiat</option>
-              </select>
-            </label>
-            <label><strong>Amount</strong>
-              <input type="number" step="0.01" required />
-            </label>
-            <label><strong>Payment method</strong>
-              <input type="text" required />
-            </label>
-            <button type="submit" class="btn primary">Proceed</button>
-          </fieldset>
-        </form>
-      </article>
-    </div>
-  </section>
+      <!-- Trade room: three-column trading flow -->
+      <section id="trade" class="panel">
+        <div class="panel-header">
+          <h2>Trade room</h2>
+          <p class="muted">Escrow-protected trade. Follow steps and timelines for safe release.</p>
+        </div>
 
-  <!-- Compliance -->
-  <section id="compliance" class="panel">
-    <h2>Compliance & risk</h2>
-    <div class="grid-2">
-      <article class="card">
-        <h3>Activity review</h3>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Event</th>
-              <th>Type</th>
-              <th>Severity</th>
-              <th>Notes</th>
-            </tr>
-          </thead>
-          <tbody id="compliance-tbody">
-            <tr>
-              <td>—</td>
-              <td>—</td>
-              <td>—</td>
-              <td>—</td>
-            </tr>
-          </tbody>
-        </table>
-      </article>
+        <div class="trade-grid">
+          <!-- Left: timeline + controls -->
+          <div class="trade-left">
+            <div class="card">
+              <h3>Escrow timeline</h3>
+              <div class="timeline">
+                <div class="step" data-step="1">Lock escrow</div>
+                <div class="step" data-step="2">Mark paid</div>
+                <div class="step" data-step="3">Release funds</div>
+              </div>
+              <div class="timer">
+                <strong>Payment window:</strong> <span id="payment-window">30:00</span>
+              </div>
+              <div class="inline-actions">
+                <button class="btn ghost" id="raise-dispute">Raise dispute</button>
+              </div>
+            </div>
 
-      <article class="card">
-        <h3>Report suspicious activity</h3>
-        <form id="form-sar">
-          <fieldset>
-            <legend>Manual SAR draft</legend>
-            <label><strong>Reference ID</strong>
-              <input type="text" required />
-            </label>
-            <label><strong>Summary</strong>
-              <textarea rows="4" required></textarea>
-            </label>
-            <button type="submit" class="btn primary">Save report</button>
-          </fieldset>
-        </form>
-      </article>
-    </div>
-  </section>
+            <div class="card">
+              <h3>Open trade</h3>
+              <form id="form-open-trade">
+                <fieldset>
+                  <label>Listing ID
+                    <input type="text" id="listing-id" required />
+                  </label>
+                  <label>Asset
+                    <input type="text" id="escrow-asset" value="USDT" />
+                  </label>
+                  <label>Amount
+                    <input type="number" id="escrow-amount" step="0.01" required />
+                  </label>
+                  <label>Payment method
+                    <input type="text" id="escrow-payment" value="Bank transfer" />
+                  </label>
+                  <label>Notes
+                    <textarea rows="3" id="escrow-notes" placeholder="Confirm details before locking"></textarea>
+                  </label>
+                  <button type="submit" class="btn primary">Lock escrow</button>
+                </fieldset>
+              </form>
+            </div>
+          </div>
 
-  <!-- Support -->
-  <section id="support" class="panel">
-    <h2>Support</h2>
-    <div class="grid-2">
-      <article class="card">
-        <h3>New ticket</h3>
-        <form id="form-ticket">
-          <fieldset>
-            <legend>Contact support</legend>
-            <label><strong>Subject</strong>
-              <input type="text" required />
-            </label>
-            <label><strong>Category</strong>
-              <select required>
-                <option>Account</option>
-                <option>KYC</option>
-                <option>Wallets</option>
-                <option>P2P trading</option>
-                <option>Payments</option>
-                <option>Compliance</option>
-              </select>
-            </label>
-            <label><strong>Description</strong>
-              <textarea rows="4" required></textarea>
-            </label>
-            <button type="submit" class="btn primary">Submit ticket</button>
-          </fieldset>
-        </form>
-      </article>
+          <!-- Center: payment and actions -->
+          <div class="trade-center">
+            <div class="card">
+              <h3>Payment</h3>
+              <form id="form-mark-paid" class="disabled">
+                <fieldset>
+                  <label>Amount paid
+                    <input type="number" id="payment-amount" step="0.01" required />
+                  </label>
+                  <label>Transaction reference
+                    <input type="text" id="payment-ref" required />
+                  </label>
+                  <label>Proof notes
+                    <textarea rows="3" id="payment-notes" placeholder="Bank slip details, timestamps"></textarea>
+                  </label>
+                  <button type="submit" class="btn primary">Mark as paid</button>
+                </fieldset>
+              </form>
+            </div>
 
-      <article class="card">
-        <h3>Ticket history</h3>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Ticket ID</th>
-              <th>Subject</th>
-              <th>Status</th>
-              <th>Last update</th>
-            </tr>
-          </thead>
-          <tbody id="ticket-tbody">
-            <tr>
-              <td>—</td>
-              <td>—</td>
-              <td>—</td>
-              <td>—</td>
-            </tr>
-          </tbody>
-        </table>
-      </article>
-    </div>
-  </section>
+            <div class="card">
+              <h3>Release</h3>
+              <form id="form-release" class="disabled">
+                <fieldset>
+                  <label>2FA code
+                    <input type="text" id="release-2fa" required />
+                  </label>
+                  <label class="inline">
+                    <input type="checkbox" id="release-confirm" required /> I confirm payment was received
+                  </label>
+                  <button type="submit" class="btn primary">Release funds</button>
+                </fieldset>
+              </form>
+            </div>
+          </div>
 
-  <!-- Settings -->
-  <section id="settings" class="panel">
-    <h2>Settings</h2>
-    <div class="grid-3">
-      <article class="card">
-        <h3>Profile</h3>
-        <form id="form-profile">
-          <fieldset>
-            <legend>Update profile</legend>
-            <label><strong>Display name</strong>
-              <input type="text" />
-            </label>
-            <label><strong>Phone number</strong>
-              <input type="tel" />
-            </label>
-            <label><strong>Time zone</strong>
-              <input type="text" value="SAST" />
-            </label>
-            <button type="submit" class="btn primary">Save changes</button>
-          </fieldset>
-        </form>
-      </article>
+          <!-- Right: counterparty panel -->
+          <div class="trade-right">
+            <div class="card">
+              <h3>Counterparty</h3>
+              <ul class="status">
+                <li><strong>Name:</strong> <span id="cp-name">—</span></li>
+                <li><strong>Reputation:</strong> 4.8 ★</li>
+                <li><strong>Trades:</strong> 1,240</li>
+                <li><strong>Avg release:</strong> 8 min</li>
+              </ul>
+              <p class="muted">Policy: name-match required, payment window 30 min, proof mandatory.</p>
+            </div>
 
-      <article class="card">
-        <h3>Security</h3>
-        <form id="form-security">
-          <fieldset>
-            <legend>Account protection</legend>
-            <label class="inline">
-              <input type="checkbox" /> Enable 2FA (TOTP)
-            </label>
-            <label><strong>New password</strong>
-              <input type="password" />
-            </label>
-            <button type="submit" class="btn primary">Update security</button>
-          </fieldset>
-        </form>
-      </article>
+            <div class="card">
+              <h3>Chat / Support</h3>
+              <div class="chat-box">
+                <div class="chat-log" id="chat-log">
+                  <div class="chat-msg system">System: Escrow created. Follow payment steps.</div>
+                </div>
+                <div class="chat-input-row">
+                  <input type="text" id="chat-input" placeholder="Message" />
+                  <button class="btn ghost" id="chat-send">Send</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-      <article class="card">
-        <h3>Notifications</h3>
-        <form id="form-notifications">
-          <fieldset>
-            <legend>Preferences</legend>
-            <label class="inline">
-              <input type="checkbox" checked /> Email alerts
-            </label>
-            <label class="inline">
-              <input type="checkbox" /> Push alerts
-            </label>
-            <label class="inline">
-              <input type="checkbox" checked /> Trade updates
-            </label>
-            <button type="submit" class="btn primary">Save preferences</button>
-          </fieldset>
-        </form>
-      </article>
-    </div>
-  </section>
+      <!-- Listings studio page -->
+      <section id="listings" class="panel">
+        <div class="panel-header">
+          <h2>Listings</h2>
+          <p class="muted">Create and manage your buy/sell listings with precise pricing and limits.</p>
+        </div>
+
+        <div class="grid-2">
+          <article class="card">
+            <h3>New listing</h3>
+            <form id="form-listing-studio">
+              <fieldset class="grid-2">
+                <label>Side
+                  <select required><option value="">Select</option><option>Sell</option><option>Buy</option></select>
+                </label>
+                <label>Asset
+                  <select required><option value="">Select</option><option>BTC</option><option>ETH</option><option>USDT</option></select>
+                </label>
+                <label>Price mode
+                  <select required><option>Fixed</option><option>Index + premium</option></select>
+                </label>
+                <label>Price / premium %
+                  <input type="number" step="0.01" required />
+                </label>
+                <label>Min limit
+                  <input type="number" step="0.01" required />
+                </label>
+                <label>Max limit
+                  <input type="number" step="0.01" required />
+                </label>
+                <label>Payment method
+                  <select required><option>Bank transfer</option><option>Mobile money</option><option>Cash</option></select>
+                </label>
+                <label>Terms
+                  <textarea rows="4" placeholder="Payment window, documents required, name-match policy, etc."></textarea>
+                </label>
+                <button type="submit" class="btn primary">Publish</button>
+              </fieldset>
+            </form>
+          </article>
+
+          <article class="card">
+            <h3>My listings</h3>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Side</th>
+                  <th>Asset</th>
+                  <th>Price mode</th>
+                  <th>Limits</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="my-listings">
+                <tr><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+              </tbody>
+            </table>
+          </article>
+        </div>
+      </section>
+
+      <!-- Wallets -->
+      <section id="wallets" class="panel">
+        <div class="panel-header">
+          <h2>Wallets</h2>
+          <p class="muted">Multi-asset wallets with provisioning, deposits, and withdrawals.</p>
+        </div>
+        <div class="grid-2">
+          <article class="card">
+            <h3>Crypto balances</h3>
+            <table class="table">
+              <thead>
+                <tr><th>Asset</th><th>Balance</th><th>Address</th><th>Actions</th></tr>
+              </thead>
+              <tbody id="wallet-tbody">
+                <tr><td>BTC</td><td class="balance" data-asset="BTC">0.00000000</td><td class="address">—</td><td><button class="btn ghost provision" data-asset="BTC">Provision</button></td></tr>
+                <tr><td>ETH</td><td class="balance" data-asset="ETH">0.00000000</td><td class="address">—</td><td><button class="btn ghost provision" data-asset="ETH">Provision</button></td></tr>
+                <tr><td>USDT</td><td class="balance" data-asset="USDT">0.00</td><td class="address">—</td><td><button class="btn ghost provision" data-asset="USDT">Provision</button></td></tr>
+              </tbody>
+            </table>
+            <div class="inline-actions">
+              <button id="simulate-deposit" class="btn subtle">✨ Simulate deposit 0.05 BTC</button>
+            </div>
+          </article>
+
+          <article class="card">
+            <h3>Withdraw crypto</h3>
+            <form id="form-withdraw">
+              <fieldset>
+                <label>Asset
+                  <select required><option value="">Select</option><option>BTC</option><option>ETH</option><option>USDT (ERC20)</option></select>
+                </label>
+                <label>Amount
+                  <input type="number" step="0.00000001" required />
+                </label>
+                <label>Destination address
+                  <input type="text" required />
+                </label>
+                <label>2FA code
+                  <input type="text" required />
+                </label>
+                <button type="submit" class="btn primary">Withdraw</button>
+              </fieldset>
+            </form>
+          </article>
+        </div>
+      </section>
+
+      <!-- Fiat -->
+      <section id="fiat" class="panel">
+        <div class="panel-header">
+          <h2>Fiat rails</h2>
+          <p class="muted">On-/off-ramps for localized payment methods.</p>
+        </div>
+        <div class="grid-2">
+          <article class="card">
+            <h3>Add payment method</h3>
+            <form id="form-payment-method">
+              <fieldset>
+                <label>Type
+                  <select required><option value="">Select</option><option>Bank account</option><option>Mobile money</option><option>Cash pickup</option></select>
+                </label>
+                <label>Provider / bank
+                  <input type="text" required />
+                </label>
+                <label>Account / number
+                  <input type="text" required />
+                </label>
+                <label>Account name
+                  <input type="text" required />
+                </label>
+                <button type="submit" class="btn primary">Save method</button>
+              </fieldset>
+            </form>
+          </article>
+
+          <article class="card">
+            <h3>Fiat deposit / withdrawal</h3>
+            <form id="form-fiat">
+              <fieldset>
+                <label>Action
+                  <select required><option value="">Select</option><option>Deposit fiat</option><option>Withdraw fiat</option></select>
+                </label>
+                <label>Amount
+                  <input type="number" step="0.01" required />
+                </label>
+                <label>Payment method
+                  <input type="text" required />
+                </label>
+                <button type="submit" class="btn primary">Proceed</button>
+              </fieldset>
+            </form>
+          </article>
+        </div>
+      </section>
+
+      <!-- Disputes -->
+      <section id="disputes" class="panel">
+        <div class="panel-header">
+          <h2>Disputes</h2>
+          <p class="muted">Open cases and track mediation through resolution.</p>
+        </div>
+        <div class="grid-2">
+          <article class="card">
+            <h3>Open a dispute</h3>
+            <form id="form-dispute">
+              <fieldset>
+                <label>Trade ID
+                  <input type="text" required />
+                </label>
+                <label>Reason
+                  <select required>
+                    <option value="">Select</option>
+                    <option>No payment received</option>
+                    <option>Payment reversed</option>
+                    <option>Counterparty unresponsive</option>
+                    <option>Other</option>
+                  </select>
+                </label>
+                <label>Description
+                  <textarea rows="4" placeholder="Provide evidence and context" required></textarea>
+                </label>
+                <button type="submit" class="btn primary">Submit dispute</button>
+              </fieldset>
+            </form>
+          </article>
+
+          <article class="card">
+            <h3>Dispute status</h3>
+            <table class="table">
+              <thead>
+                <tr><th>Dispute ID</th><th>Trade ID</th><th>Status</th><th>Opened</th><th>Latest update</th></tr>
+              </thead>
+              <tbody id="dispute-tbody">
+                <tr><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+              </tbody>
+            </table>
+          </article>
+        </div>
+      </section>
+
+      <!-- Support -->
+      <section id="support" class="panel">
+        <div class="panel-header">
+          <h2>Support</h2>
+          <p class="muted">Open tickets, browse the knowledge base, and get help.</p>
+        </div>
+        <div class="grid-2">
+          <article class="card">
+            <h3>New ticket</h3>
+            <form id="form-ticket">
+              <fieldset>
+                <label>Subject
+                  <input type="text" required />
+                </label>
+                <label>Category
+                  <select required>
+                    <option>Account</option>
+                    <option>KYC</option>
+                    <option>Wallets</option>
+                    <option>P2P trading</option>
+                    <option>Payments</option>
+                    <option>Compliance</option>
+                  </select>
+                </label>
+                <label>Description
+                  <textarea rows="4" required></textarea>
+                </label>
+                <button type="submit" class="btn primary">Submit ticket</button>
+              </fieldset>
+            </form>
+          </article>
+
+          <article class="card">
+            <h3>Ticket history</h3>
+            <table class="table">
+              <thead>
+                <tr><th>Ticket ID</th><th>Subject</th><th>Status</th><th>Last update</th></tr>
+              </thead>
+              <tbody id="ticket-tbody">
+                <tr><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+              </tbody>
+            </table>
+          </article>
+        </div>
+      </section>
+
+      <!-- Profile (KYC + Security + Preferences) -->
+      <section id="profile" class="panel">
+        <div class="panel-header">
+          <h2>Profile</h2>
+          <p class="muted">KYC tiers, security, notifications, and preferences.</p>
+        </div>
+        <div class="grid-3">
+          <article class="card">
+            <h3>KYC tiers</h3>
+            <form id="form-kyc-tier">
+              <fieldset>
+                <label>Tier
+                  <select required>
+                    <option value="">Choose tier</option>
+                    <option>Tier 1 — Basic (email + phone)</option>
+                    <option>Tier 2 — Standard (ID + selfie)</option>
+                    <option>Tier 3 — Enhanced (POA + source of funds)</option>
+                  </select>
+                </label>
+                <button type="submit" class="btn primary">Continue</button>
+              </fieldset>
+            </form>
+            <form id="form-kyc-id">
+              <fieldset>
+                <label>Full name
+                  <input type="text" required />
+                </label>
+                <label>Date of birth
+                  <input type="date" required />
+                </label>
+                <label>ID type
+                  <select required><option value="">Select</option><option>Passport</option><option>National ID</option><option>Driver’s license</option></select>
+                </label>
+                <label>ID number
+                  <input type="text" required />
+                </label>
+                <label>Address
+                  <input type="text" required />
+                </label>
+                <button type="submit" class="btn primary">Submit KYC</button>
+              </fieldset>
+            </form>
+          </article>
+
+          <article class="card">
+            <h3>Security</h3>
+            <form id="form-security">
+              <fieldset>
+                <label class="inline"><input type="checkbox" /> Enable 2FA (TOTP)</label>
+                <label>New password
+                  <input type="password" />
+                </label>
+                <button type="submit" class="btn primary">Update security</button>
+              </fieldset>
+            </form>
+          </article>
+
+          <article class="card">
+            <h3>Notifications</h3>
+            <form id="form-notifications">
+              <fieldset>
+                <label class="inline"><input type="checkbox" checked /> Email alerts</label>
+                <label class="inline"><input type="checkbox" /> Push alerts</label>
+                <label class="inline"><input type="checkbox" checked /> Trade updates</label>
+                <button type="submit" class="btn primary">Save preferences</button>
+              </fieldset>
+            </form>
+          </article>
+        </div>
+      </section>
+
+      <!-- Auth: dedicated screen -->
+      <section id="auth" class="panel">
+        <div class="panel-header">
+          <h2>Authentication</h2>
+          <p class="muted">Sign up or sign in to manage your account and trade.</p>
+        </div>
+        <div class="auth-toggle">
+          <button class="btn ghost" id="show-signup">Sign up</button>
+          <button class="btn ghost" id="show-signin">Sign in</button>
+        </div>
+        <div class="grid-2">
+          <article class="card auth-form" id="signup-form">
+            <h3>Sign up</h3>
+            <form id="form-signup">
+              <fieldset>
+                <label>Email
+                  <input type="email" required />
+                </label>
+                <label>Password
+                  <input type="password" required />
+                </label>
+                <label>Country
+                  <select required>
+                    <option value="">Select</option>
+                    <option>South Africa</option>
+                    <option>Nigeria</option>
+                    <option>Kenya</option>
+                    <option>United Kingdom</option>
+                    <option>United States</option>
+                  </select>
+                </label>
+                <label class="inline"><input type="checkbox" required /> I agree to the terms</label>
+                <button type="submit" class="btn primary">Create account</button>
+              </fieldset>
+            </form>
+          </article>
+
+          <article class="card auth-form" id="signin-form" style="display:none;">
+            <h3>Sign in</h3>
+            <form id="form-signin">
+              <fieldset>
+                <label>Email
+                  <input type="email" required />
+                </label>
+                <label>Password
+                  <input type="password" required />
+                </label>
+                <label>2FA code (optional)
+                  <input type="text" />
+                </label>
+                <button type="submit" class="btn primary">Sign in</button>
+              </fieldset>
+            </form>
+          </article>
+        </div>
+      </section>
+
+      <!-- Compliance -->
+      <section id="compliance" class="panel">
+        <div class="panel-header">
+          <h2>Compliance & risk</h2>
+          <p class="muted">Activity review and SAR drafts.</p>
+        </div>
+        <div class="grid-2">
+          <article class="card">
+            <h3>Activity review</h3>
+            <table class="table">
+              <thead><tr><th>Event</th><th>Type</th><th>Severity</th><th>Notes</th></tr></thead>
+              <tbody id="compliance-tbody"><tr><td>—</td><td>—</td><td>—</td><td>—</td></tr></tbody>
+            </table>
+          </article>
+          <article class="card">
+            <h3>Report suspicious activity</h3>
+            <form id="form-sar">
+              <fieldset>
+                <label>Reference ID
+                  <input type="text" required />
+                </label>
+                <label>Summary
+                  <textarea rows="4" required></textarea>
+                </label>
+                <button type="submit" class="btn primary">Save report</button>
+              </fieldset>
+            </form>
+          </article>
+        </div>
+      </section>
+
+      <!-- Settings -->
+      <section id="settings" class="panel">
+        <div class="panel-header">
+          <h2>Settings</h2>
+          <p class="muted">Profile and preferences.</p>
+        </div>
+        <div class="grid-3">
+          <article class="card">
+            <h3>Profile</h3>
+            <form id="form-profile">
+              <fieldset>
+                <label>Display name
+                  <input type="text" />
+                </label>
+                <label>Phone number
+                  <input type="tel" />
+                </label>
+                <label>Time zone
+                  <input type="text" value="SAST" />
+                </label>
+                <button type="submit" class="btn primary">Save changes</button>
+              </fieldset>
+            </form>
+          </article>
+
+          <article class="card">
+            <h3>Appearance</h3>
+            <form id="form-appearance">
+              <fieldset>
+                <label>Theme
+                  <select>
+                    <option>Dark</option>
+                    <option>Light</option>
+                  </select>
+                </label>
+                <button type="submit" class="btn primary">Apply</button>
+              </fieldset>
+            </form>
+          </article>
+
+          <article class="card">
+            <h3>Session</h3>
+            <div class="inline-actions">
+              <button class="btn ghost">Sign out all devices</button>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <!-- Right sidebar: smart panel -->
+    <aside class="sidebar right" id="right-sidebar">
+      <div class="sidebar-section">
+        <h4>Context</h4>
+        <p class="muted">Counterparty policies, timers, and reputation summary appear here during trades.</p>
+      </div>
+      <div class="sidebar-section">
+        <h4>Help</h4>
+        <ul class="list">
+          <li>Payment proof tips</li>
+          <li>Dispute checklist</li>
+          <li>Release safety prompts</li>
+        </ul>
+      </div>
+    </aside>
+  </div>
 
   <!-- Footer -->
   <footer>
